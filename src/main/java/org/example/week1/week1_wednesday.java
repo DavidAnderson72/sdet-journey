@@ -1,6 +1,6 @@
-package org.example;
+package org.example.week1;
 
-public class Week1Wednesday {
+public class week1_wednesday {
     public static void main(String[] args) {
 
         // Your rental income details

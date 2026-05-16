@@ -1,6 +1,6 @@
-package org.example;
+package org.example.week1;
 
-public class Main {
+public class week1_monday {
     public static void main(String[] args) {
 
         // Variables and data types
