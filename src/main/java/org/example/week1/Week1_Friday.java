@@ -1,6 +1,6 @@
 package org.example.week1;
 
-public class week1_friday {
+public class Week1_Friday {
     public static void main(String[] args) {
 
         // Calling our methods

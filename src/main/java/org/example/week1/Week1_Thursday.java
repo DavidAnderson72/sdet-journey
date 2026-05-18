@@ -1,6 +1,6 @@
 package org.example.week1;
 
-public class week1_thursday {
+public class Week1_Thursday {
     public static void main(String[] args) {
 
         // Your property details
