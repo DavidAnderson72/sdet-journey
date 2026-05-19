@@ -57,6 +57,32 @@ public class RentalCalculator {
         System.out.printf("Annual profit:      £%.2f%n", annualGrossProfit());
         System.out.printf("Tax credit (S.24):  £%.2f%n",taxCredit());
         System.out.printf("Net income:         £%.2f%n", netIncome());
-        System.out.println("Tax band:        " + taxBand());
+        System.out.printf("Tax band:           %s%n", taxBand());
+    }
+
+    // Determines tax band and tax owed based on annual profit
+    public double taxOwed() {
+        double annual = annualGrossProfit();
+        if (annual <= 12570) {
+            return 0;
+        } else if (annual <= 50270) {
+            return (annual - 12570) * 0.20;
+        } else if (annual <= 125140) {
+            return (annual - 50270) * 0.40;
+        } else {
+            return (annual - 125140) * 0.45;
+        }
+    }
+
+    // Loop to project income over 12 months
+    public void printMonthlyProjection() {
+        System.out.println("\n=== 12 Month Projection ===");
+        double runningTotal = 0;
+        for (int month = 1; month <= 12; month++) {
+            runningTotal += grossProfit();
+            System.out.printf("Month %d: Profit £%.2f | Running total £%.2f%n",
+                    month, grossProfit(), runningTotal);
+        }
+        System.out.printf("Annual total: £%.2f%n", runningTotal);
     }
 }

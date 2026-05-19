@@ -16,5 +16,7 @@ public class Week1_Saturday {
         System.out.printf("Tax credit:    £%.2f%n", calculator.taxCredit());
         System.out.printf("Net income:    £%.2f%n", calculator.netIncome());
         System.out.println("Tax band:      " + calculator.taxBand());
+        System.out.printf("Tax owed:      £%.2f%n", calculator.taxOwed());
+        calculator.printMonthlyProjection();
     }
 }
