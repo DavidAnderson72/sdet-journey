@@ -1,5 +1,7 @@
 package org.example.week2;
 
+import org.example.common.Taxable;
+
 import java.util.ArrayList;
 import java.util.List;
 

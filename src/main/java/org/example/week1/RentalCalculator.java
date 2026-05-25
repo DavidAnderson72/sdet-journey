@@ -1,6 +1,8 @@
 package org.example.week1;
 
-public class RentalCalculator {
+import org.example.common.Taxable;
+
+public class RentalCalculator implements Taxable {
 
     // Instance variables
     private double monthlyRent;
@@ -84,5 +86,29 @@ public class RentalCalculator {
                     month, grossProfit(), runningTotal);
         }
         System.out.printf("Annual total: £%.2f%n", runningTotal);
+    }
+
+    // Taxable interface implementation
+    @Override
+    public double calculateTax() {
+        double annual = annualGrossProfit();
+        if (annual <= 12570) return 0;
+        else if (annual <= 50270) return (annual - 12570) * 0.20;
+        else if (annual <= 125140) return (annual - 50270) * 0.40;
+        else return (annual - 125140) * 0.45;
+    }
+
+    @Override
+    public String getTaxBand() {
+        double annual = annualGrossProfit();
+        if (annual <= 12570) return "Personal allowance";
+        else if (annual <= 50270) return "Basic rate 20%";
+        else if (annual <= 125140) return "Higher rate 40%";
+        else return "Additional rate 45%";
+    }
+
+    @Override
+    public boolean requiresSelfAssessment() {
+        return annualGrossProfit() > 1000;
     }
 }

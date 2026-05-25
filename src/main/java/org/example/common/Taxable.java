@@ -1,4 +1,4 @@
-package org.example.week2;
+package org.example.common;
 
 public interface Taxable {
 

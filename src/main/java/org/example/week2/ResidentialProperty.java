@@ -1,5 +1,7 @@
 package org.example.week2;
 
+import org.example.common.Taxable;
+
 public class ResidentialProperty extends BaseProperty implements Taxable {
 
     private int bedrooms;

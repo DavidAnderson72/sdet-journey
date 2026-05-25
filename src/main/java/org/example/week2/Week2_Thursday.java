@@ -1,5 +1,7 @@
 package org.example.week2;
 
+import org.example.common.Taxable;
+
 public class Week2_Thursday {
     public static void main(String[] args) {
 

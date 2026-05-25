@@ -18,5 +18,13 @@ public class Week1_Saturday {
         System.out.println("Tax band:      " + calculator.taxBand());
         System.out.printf("Tax owed:      £%.2f%n", calculator.taxOwed());
         calculator.printMonthlyProjection();
+
+        // Test Taxable interface on RentalCalculator
+        System.out.println("\n=== RentalCalculator as Taxable ===");
+        calculator.printTaxSummary();
+        System.out.printf("Requires self assessment: %s%n",
+                calculator.requiresSelfAssessment() ? "Yes" : "No");
     }
+
+
 }
