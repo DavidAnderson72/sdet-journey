@@ -55,7 +55,6 @@ public class PropertyPortfolio {
         System.out.printf("Properties:  %d%n", getPropertyCount());
         System.out.println();
 
-        // Loop through all properties
         for (BaseProperty property : properties) {
             System.out.printf("%-30s £%.2f/month  %s%n",
                     property.getAddress(),
@@ -67,7 +66,6 @@ public class PropertyPortfolio {
         System.out.printf("Total monthly income:  £%.2f%n", getTotalMonthlyIncome());
         System.out.printf("Total annual income:  £%.2f%n", getTotalAnnualIncome());
 
-        // Tax summary for residential properties
         System.out.println("\n=== Tax Position ===");
         for (BaseProperty property : properties) {
             if (property instanceof Taxable) {
@@ -79,4 +77,23 @@ public class PropertyPortfolio {
             }
         }
     }
+
+    // Returns only properties above a rent threshold
+    public List<BaseProperty> getPropertiesAboveRent(double threshold) {
+        List<BaseProperty> result = new ArrayList<>();
+        for (BaseProperty property : properties) {
+            if (property.getMonthlyRent() > threshold) {
+                result.add(property);
+            }
+        }
+        return result;
+    }
+
+    // Sort properties by monthly rent ascending
+    public void sortByRent() {
+        properties.sort((a, b) ->
+                Double.compare(a.getMonthlyRent(), b.getMonthlyRent()));
+        System.out.println("Portfolio sorted by rent");
+    }
+
 }
