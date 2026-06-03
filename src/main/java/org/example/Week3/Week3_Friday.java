@@ -120,7 +120,7 @@ public class Week3_Friday {
     }
 
     // Validate rent - throws custom exception
-    static void validateRent(double rent) throws InvalidRentException {
+    public static void validateRent(double rent) throws InvalidRentException {
         if (rent <= 0) {
             throw new InvalidRentException(
                     "Rent must be positive. Provided:   £" + rent);
