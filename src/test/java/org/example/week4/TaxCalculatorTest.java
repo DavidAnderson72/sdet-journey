@@ -31,19 +31,30 @@ class TaxCalculatorTest {
     class PersonalAllowanceBandTests {
 
         @Test
-        @DisplayName("Annual income of 10000 should produce zero tax")
-        void zeroTaxForIncomeUnderPersonalAllowance() {
-            // Monthly rent of 833.33 = -10000 annually, no expenses
+        @DisplayName("calculateTax returns zero for income under personal allowance")
+        void calculateTax_incomePersonalAllowance_returnsZero() {
+            // Arrange
             RentalCalculator calc = new RentalCalculator(833.33, 0, 0);
-            assertEquals(0.0, calc.calculateTax(), 0.01,
-                    "Income under personal allowance should produce no tax");
+
+            // Act
+            double result = calc.calculateTax();
+
+            // Assert
+            assertEquals(0.0, result, 0.01,
+                    "Monthly rent of 833.33 produces annual income under 12570 so tax should be zero");
         }
 
         @Test
-        @DisplayName("Incomeexactly at personal allowance should produce zero tax")
-        void zeroTaxExactPersonalAllowance() {
+        @DisplayName("calculateTax returns zero for income exactly at personal allowance")
+        void calculateTax_incomeAtPersonalAllowance_returnsZero() {
+            // Arrange
             RentalCalculator calc = new RentalCalculator(1047.50, 0, 0);
-            assertEquals(0.0, calc.calculateTax(), 0.01,
+
+            // Act
+            double result = calc.calculateTax();
+
+            // Assert
+            assertEquals(0.0, result, 0.01,
                     "Income at exactly 12570 should produce no tax");
         }
     }
@@ -55,7 +66,7 @@ class TaxCalculatorTest {
     @DisplayName("Basic Rate Band - 20% tax")
     class BasicRateBandTests {
         @ParameterizedTest(name = "Monthly rent £{0} should produce tax of £{1}")
-        @DisplayName("Multiple rent amounts in basic rate band")
+        @DisplayName("calculateTax returns correct 20% tax for various rents in basic rate band")
         @CsvSource({
                 "1500.0, 1086.0",
                 "2000.0, 2286.0",
@@ -63,9 +74,15 @@ class TaxCalculatorTest {
                 "3000.0, 4686.0",
                 "3500.0, 5886.0"
         })
-        void basicRateTaxForVariousRents(double monthlyRent, double expectedTax) {
+        void calculateTax_rentInBasicRateBand_returnsCorrectTax(double monthlyRent, double expectedTax) {
+            // Arrange
             RentalCalculator calc = new RentalCalculator(monthlyRent, 0, 0);
-            assertEquals(expectedTax, calc.calculateTax(), 1.0,
+
+            // Act
+            double result = calc.calculateTax();
+
+            // Assert
+            assertEquals(expectedTax, result, 1.0,
                     "Tax should be 20% of income above personal allowance");
         }
     }
@@ -77,13 +94,19 @@ class TaxCalculatorTest {
     @DisplayName("Higher Rate Band - 40% tax")
     class HigherRateBandTests {
 
-        @ParameterizedTest(name = "Monthly rent £{0} should be in higher rate band")
+        @ParameterizedTest(name = "Monthly rent £{0} should produce tax over 3000")
+        @DisplayName("calculateTax returns tax over 3000 for rents in higher rate band")
         @ValueSource(doubles = {5000.0, 6000.0, 7000.0, 8000.0, 9000.0})
-        @DisplayName("High rent amounts should fall in higher rate band and produce tax over 3000")
-        void higherRateBandForLargeRents(double monthlyRent) {
+        void calculateTax_rentInHigherRateBand_returnsTaxOver3000(double monthlyRent) {
+            // Arrange
             RentalCalculator calc = new RentalCalculator(monthlyRent, 0, 0);
-        assertTrue(calc.calculateTax() >3000,
-                "Annual income over 50270 should produce tax over 15000");
+
+            // Act
+            double result = calc.calculateTax();
+
+            // Assert
+        assertTrue(result >3000,
+                "Annual income over 50270 should produce tax over 3000");
         }
     }
 
@@ -91,12 +114,18 @@ class TaxCalculatorTest {
     // @MethodSource - supplying complex test data
     // --------------------------------------------------------------------
     @ParameterizedTest(name = "Rent £{0} with expenses £{1} should produce tax £{2}")
-    @DisplayName("Tax calculations with expenses factrored in")
+    @DisplayName("calculateTax correctly reduces tax when expenses are factored in")
     @MethodSource("rentAndExpensesProvider")
-    void taxWithExpenses(double monthlyRent, double monthlyExpenses, double expectedTax) {
+    void calculateTax_rentWithExpenses_returnsReducedTax(double monthlyRent, double monthlyExpenses, double expectedTax) {
+        // Arrange
         RentalCalculator calc = new RentalCalculator(monthlyRent, monthlyExpenses, 0);
-        assertEquals(expectedTax, calc.calculateTax(), 1.0,
-                "Expenses should reduce taxable income");
+
+        // Act
+        double result = calc.calculateTax();
+
+        // Assert
+        assertEquals(expectedTax, result, 1.0,
+                "Expenses should reduce taxable income and therefore reduce tax");
     }
 
     static Stream<org.junit.jupiter.params.provider.Arguments> rentAndExpensesProvider() {
@@ -111,10 +140,17 @@ class TaxCalculatorTest {
     // @RepeatedTest
     // -------------------------------------------------------------------
     @RepeatedTest(3)
-    @DisplayName("Tax calculation should be consistent across repeated runs")
-    void taxCalculationIsConsistent() {
+    @DisplayName("calculateTax produces consistent results across repeated runs")
+    void calculateTax_sameInputRepeated_returnsConsistentResult() {
+
+        // Arrange
         RentalCalculator calc = new RentalCalculator(2000.0, 0, 0);
-        assertEquals(2286.0, calc.calculateTax(), 1.0,
+
+        // Act
+        double result = calc.calculateTax();
+
+        // Assert
+        assertEquals(2286.0, result, 1.0,
                 "Same inputs should always produce same tax output");
     }
 
@@ -122,21 +158,37 @@ class TaxCalculatorTest {
     // assumeTrue / assumeFalse
     // -------------------------------------------------------------------
     @Test
-    @DisplayName("Skip test if income is below personal allowance")
-    void onlyRunIfIncomeTaxable() {
+    @DisplayName("calculateTax is skipped when income produces no tax")
+    void calculateTax_incomeBelowPersonalAllowance_testSkipped() {
+        // Arrange
         RentalCalculator calc = new RentalCalculator(500.0, 0, 0);
-        assumeTrue(calc.calculateTax() > 0,
+
+        // Act
+        double result = calc.calculateTax();
+
+        // Assume & Assert
+        assumeTrue(result > 0,
         "Skipping test - income is below personal allowance, no tax due");
-        assertTrue(calc.calculateTax() > 0);
+        assertTrue(result > 0,
+                "Tax should be positive if income exceeds personal allowance");
     }
 
     // ------------------------------------------------------------------
     // @Disabled
     // ------------------------------------------------------------------
-    @Test@Disabled("Additional rate band not yet implemented in RentalCalculator - revisit week 6")
-    @DisplayName("Additional rate band at 45 percent")
-    void additionalRateBandTest() {
+    @Test
+    @Disabled("Additional rate band not yet implemented in RentalCalculator - revisit week 6")
+    @DisplayName("calculateTax returns correct tax for income in additional rate band")
+    void calculateTax_incomeInAdditionalRateBand_returnsCorrectTax() {
+        // Arrange
         RentalCalculator calc = new RentalCalculator(15000.0, 0, 0);
+
+        // Act
+        double result = calc.calculateTax();
+
+        // Assert
+        assertTrue(result > 40000,
+                "Income in additional rate band should produce tax over 40000");
     }
 
 }
