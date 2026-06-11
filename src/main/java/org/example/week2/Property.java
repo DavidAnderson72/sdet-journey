@@ -25,6 +25,7 @@ public class Property {
     public String getAddress() { return address; }
     public double getMonthlyRent() { return monthlyRent; }
     public int getBedrooms() { return bedrooms; }
+    public double getAnnualRent() {return monthlyRent * 12; }
 
     // Print details
     public void printDetails() {

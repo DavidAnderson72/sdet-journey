@@ -15,10 +15,20 @@
     </properties>
 
     <dependencies>
+
+        <!-- JUnit 5 - used by Week 4 tests -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- TestNG - used by Week 5 tests -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.8.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
