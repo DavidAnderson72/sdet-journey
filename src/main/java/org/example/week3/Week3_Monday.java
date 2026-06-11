@@ -1,12 +1,10 @@
-package org.example.Week3;
+package org.example.week3;
 
-import org.example.common.Taxable;
 import org.example.week2.BaseProperty;
 import org.example.week2.ResidentialProperty;
 import org.example.week2.CommercialProperty;
 import org.example.week2.PropertyPortfolio;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Week3_Monday {

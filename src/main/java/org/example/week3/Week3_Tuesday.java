@@ -1,9 +1,8 @@
-package org.example.Week3;
+package org.example.week3;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class Week3_Tuesday {
     public static void main(String[] args) {

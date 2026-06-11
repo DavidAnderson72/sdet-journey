@@ -1,4 +1,4 @@
-package org.example.Week3;
+package org.example.week3;
 
 public class InvalidRentException extends RuntimeException {
 

@@ -1,4 +1,4 @@
-package org.example.Week3;
+package org.example.week3;
 
 import org.example.common.Taxable;
 import org.example.week2.BaseProperty;

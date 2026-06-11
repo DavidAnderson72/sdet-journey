@@ -1,4 +1,4 @@
-package org.example.Week3;
+package org.example.week3;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

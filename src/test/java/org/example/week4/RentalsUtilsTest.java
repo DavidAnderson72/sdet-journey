@@ -1,8 +1,8 @@
 package org.example.week4;
 
-import org.example.Week3.InvalidRentException;
-import org.example.Week3.RentalUtils;
-import org.example.Week3.Week3_Friday;
+import org.example.week3.InvalidRentException;
+import org.example.week3.RentalUtils;
+import org.example.week3.Week3_Friday;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 

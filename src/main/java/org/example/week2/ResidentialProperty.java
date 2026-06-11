@@ -1,6 +1,7 @@
 package org.example.week2;
 
 import org.example.common.Taxable;
+import org.example.week3.InvalidRentException;
 
 public class ResidentialProperty extends BaseProperty implements Taxable {
 
@@ -11,6 +12,9 @@ public class ResidentialProperty extends BaseProperty implements Taxable {
     public ResidentialProperty(String address, double monthlyRent,
                                int bedrooms, boolean furnished) {
         super(address, monthlyRent);
+        if (monthlyRent <= 0) {
+            throw new InvalidRentException("Monthly rent must be greater than zero, got:" + monthlyRent);
+        }
         this.bedrooms = bedrooms;
         this.furnished = furnished;
         this.tenantName = "Vacant";
