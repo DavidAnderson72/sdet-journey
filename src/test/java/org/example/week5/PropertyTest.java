@@ -36,7 +36,6 @@ public class PropertyTest {
         @AfterMethod(alwaysRun = true)
         public void tearDown() {
             System.out.println("Test completed");
-            property = null;
         }
 
         @Test(groups = {"smoke", "property"})
@@ -62,4 +61,31 @@ public class PropertyTest {
             int result = property.getBedrooms();
             Assert.assertEquals(result, 3, "Bedroom count should match the value set in constructor");
         }
+
+        @Test(groups = {"smoke", "property"}, dependsOnMethods = {"getAddress_validProperty_returnsCorrectAddress"})
+        public void getAddress_dependencyExample_skipsIfAddressFails() {
+        String result = property.getAddress();
+        Assert.assertEquals(result, "10 Manchester Road", "Dependent test - only runs if address test passed");
+        }
+
+        @Test(groups = {"regression", "property"}, dependsOnGroups = {"smoke"})
+        public void getAnnualRent_dependsOnSmoke_skipsIfSmokeFails() {
+        double result = property.getAnnualRent();
+        Assert.assertEquals(result, 14400.00, "Only runs if all smoke tests passed");
+        }
+
+        @Test(groups = {"smoke", "property"},
+            threadPoolSize = 3,
+            invocationCount = 6)
+        public void getMonthlyRent_stressTest_alwaysReturnsCorrectRent() {
+        double result = property.getMonthlyRent();
+        Assert.assertEquals(result, 1200.00, "Monthly rent should be consistent across parallel invocations");
+    }
+
+    @Test(groups = {"smoke", "property"})
+    @Parameters("expectedRent")
+    public void getMonthlyRent_fromXmlParameter_returnsExpectedRent(double expectedRent) {
+        double result = property.getMonthlyRent();
+        Assert.assertEquals(result, expectedRent, "Rent should match the value passed from testng.xml");
+    }
 }
