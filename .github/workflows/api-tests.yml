@@ -1,0 +1,39 @@
+name: API Tests
+
+# When to run: on every push to master, on pull requests,
+# and manually from the Actions tab ("Run workflow" button).
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Download the repository's code onto the runner
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      # 2. Install Java 17 and cache Maven downloads between runs
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      # 3. Run only the API tests, using the 'api' Maven profile
+      - name: Run API tests
+        run: mvn -B clean test -Papi
+
+      # 4. Save the test reports, even if the tests failed
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-reports
+          path: target/surefire-reports/
