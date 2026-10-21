@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="SmokeSuite">
+    <parameter name="expectedRent" value="1200.0"/>
     <test name="SmokeTests">
         <groups>
             <run>
@@ -9,6 +10,8 @@
         </groups>
         <classes>
             <class name="org.example.week5.PropertyTest"/>
+            <class name="org.example.week5.TaxCalculatorTest"/>
+            <class name="org.example.week5.RentalUtilsTest"/>
         </classes>
     </test>
 </suite>
