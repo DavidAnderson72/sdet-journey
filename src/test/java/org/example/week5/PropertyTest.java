@@ -68,11 +68,11 @@ public class PropertyTest {
         Assert.assertEquals(result, "10 Manchester Road", "Dependent test - only runs if address test passed");
         }
 
-        @Test(groups = {"regression", "property"}, dependsOnGroups = {"smoke"})
+        @Test(groups = {"regression", "property"})
         public void getAnnualRent_dependsOnSmoke_skipsIfSmokeFails() {
         double result = property.getAnnualRent();
         Assert.assertEquals(result, 14400.00, "Only runs if all smoke tests passed");
-        }
+    }
 
         @Test(groups = {"smoke", "property"},
             threadPoolSize = 3,

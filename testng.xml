@@ -7,6 +7,7 @@
             <class name="org.example.week5.PropertyTest"/>
             <class name="org.example.week5.TaxCalculatorTest"/>
             <class name="org.example.week5.RentalUtilsTest"/>
+            <class name="org.example.week5.PropertyPortfolioTest"/>
         </classes>
     </test>
 </suite>
