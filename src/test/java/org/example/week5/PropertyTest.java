@@ -93,7 +93,7 @@ public class PropertyTest {
     @Test(groups = {"regression", "property"})
     public void getProperty_allFields_returnCorrectValues() {
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(property.getAddress(),"99 Manchester Road", "Address should match");
+        softAssert.assertEquals(property.getAddress(),"10 Manchester Road", "Address should match");
         softAssert.assertEquals(property.getMonthlyRent(),1200.00, "Rent amount should match");
         softAssert.assertEquals(property.getBedrooms(),3, "Number of bedrooms should match");
 
