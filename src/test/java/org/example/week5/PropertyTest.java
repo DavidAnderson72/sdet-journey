@@ -2,6 +2,7 @@ package org.example.week5;
 
 import org.example.week2.Property;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import org.testng.annotations.*;
 
 public class PropertyTest {
@@ -87,5 +88,15 @@ public class PropertyTest {
     public void getMonthlyRent_fromXmlParameter_returnsExpectedRent(double expectedRent) {
         double result = property.getMonthlyRent();
         Assert.assertEquals(result, expectedRent, "Rent should match the value passed from testng.xml");
+    }
+
+    @Test(groups = {"regression", "property"})
+    public void getProperty_allFields_returnCorrectValues() {
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(property.getAddress(),"99 Manchester Road", "Address should match");
+        softAssert.assertEquals(property.getMonthlyRent(),1200.00, "Rent amount should match");
+        softAssert.assertEquals(property.getBedrooms(),3, "Number of bedrooms should match");
+
+        softAssert.assertAll();
     }
 }
